@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ToDoItems\" />
+    <None Remove="ToDoItems\Commands\" />
+    <None Remove="ToDoItems\EventHandlers\" />
+    <None Remove="ToDoItems\Queries\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ToDoItems\" />
+    <Folder Include="ToDoItems\Commands\" />
+    <Folder Include="ToDoItems\EventHandlers\" />
+    <Folder Include="ToDoItems\Queries\" />
+  </ItemGroup>
+</Project>

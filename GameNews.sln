@@ -1,0 +1,48 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1703.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D91980B-6A4A-4C6A-9AE8-5DFA43EB92A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{5A9DA373-16E5-4845-993E-C51155FCEF9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8FE3D9C9-2E74-4004-B8FD-19C7A935C070}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNews.ApplicationCore", "src\GameNews.ApplicationCore\GameNews.ApplicationCore.csproj", "{FB8FB982-1CEB-42F2-BC6C-75FF1C8EFFE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNews.Infrastructure", "src\GameNews.Infrastructure\GameNews.Infrastructure.csproj", "{531DA1C5-AD3B-4E60-B4A7-5F8AD87A1C09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNews.WebApi", "src\GameNews.WebApi\GameNews.WebApi.csproj", "{5124FD85-0B86-4ABC-8833-8A7203059B40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB8FB982-1CEB-42F2-BC6C-75FF1C8EFFE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB8FB982-1CEB-42F2-BC6C-75FF1C8EFFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB8FB982-1CEB-42F2-BC6C-75FF1C8EFFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB8FB982-1CEB-42F2-BC6C-75FF1C8EFFE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{531DA1C5-AD3B-4E60-B4A7-5F8AD87A1C09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{531DA1C5-AD3B-4E60-B4A7-5F8AD87A1C09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{531DA1C5-AD3B-4E60-B4A7-5F8AD87A1C09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{531DA1C5-AD3B-4E60-B4A7-5F8AD87A1C09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5124FD85-0B86-4ABC-8833-8A7203059B40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5124FD85-0B86-4ABC-8833-8A7203059B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5124FD85-0B86-4ABC-8833-8A7203059B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5124FD85-0B86-4ABC-8833-8A7203059B40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86C85B51-4C7E-4E42-A960-8D8B719E6975}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FB8FB982-1CEB-42F2-BC6C-75FF1C8EFFE1} = {5D91980B-6A4A-4C6A-9AE8-5DFA43EB92A8}
+		{531DA1C5-AD3B-4E60-B4A7-5F8AD87A1C09} = {5D91980B-6A4A-4C6A-9AE8-5DFA43EB92A8}
+		{5124FD85-0B86-4ABC-8833-8A7203059B40} = {5D91980B-6A4A-4C6A-9AE8-5DFA43EB92A8}
+	EndGlobalSection
+EndGlobal
