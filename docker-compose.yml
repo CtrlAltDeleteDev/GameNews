@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  gamenews.webapi:
+    image: ${DOCKER_REGISTRY-}gamenews
+    build:
+      context: .
+      dockerfile: src/GameNews.WebApi/Dockerfile
