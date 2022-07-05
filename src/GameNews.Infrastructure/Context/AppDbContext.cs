@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using GameNews.Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace GameNews.Infrastructure.Entities
+namespace GameNews.Infrastructure.Context
 {
-    public class AppDbContext : DbContext
-    {
+	public class AppDbContext : DbContext
+	{
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
@@ -97,5 +99,6 @@ namespace GameNews.Infrastructure.Entities
         }
 
     }
-
 }
+
+
