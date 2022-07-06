@@ -1,5 +1,4 @@
 ﻿using GameNews.Infrastructure.Context;
-using GameNews.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 var ConnectionString = builder.Configuration["DBConnectionString"];
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(ConnectionString , b => b.MigrationsAssembly("GameNews.WebApi")));
+    options.UseSqlServer(ConnectionString , b => b.MigrationsAssembly("GameNews.Infrastructure")));
 
 // Add services to the container.
 
