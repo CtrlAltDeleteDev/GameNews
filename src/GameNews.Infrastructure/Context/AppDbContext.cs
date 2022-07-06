@@ -1,5 +1,4 @@
-﻿using System;
-using GameNews.Infrastructure.Entities;
+﻿using GameNews.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameNews.Infrastructure.Context

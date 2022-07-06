@@ -6,3 +6,12 @@ services:
     build:
       context: .
       dockerfile: src/GameNews.WebApi/Dockerfile
+
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      - SA_PASSWORD=12345678 #There is a spec symbol here.
+      - ACCEPT_EULA=Y
+
+volumes:
+    db:

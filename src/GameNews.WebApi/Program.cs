@@ -1,4 +1,5 @@
-﻿using GameNews.Infrastructure.Entities;
+﻿using GameNews.Infrastructure.Context;
+using GameNews.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
