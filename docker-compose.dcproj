@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>{ED9F6F70-1646-4D1A-9936-4D541B06F1DB}</ProjectGuid>
+    <ProjectGuid>{53BCA8C5-BDE7-4DF0-BA25-63B506582832}</ProjectGuid>
     <DockerLaunchBrowser>True</DockerLaunchBrowser>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>gamenews.webapi</DockerServiceName>

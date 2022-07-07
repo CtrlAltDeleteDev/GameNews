@@ -27,5 +27,8 @@
     <ProjectReference Include="..\GameNews.Infrastructure\GameNews.Infrastructure.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\GameNews.ApplicationCore\GameNews.ApplicationCore.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>
