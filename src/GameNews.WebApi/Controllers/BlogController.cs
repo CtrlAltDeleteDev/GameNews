@@ -16,6 +16,11 @@ namespace GameNews.WebApi.Controllers
     {
         private readonly AppDbContext _dbContext;
 
+        public BlogController(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<BlogEntity> Get()

@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+
   gamenews.webapi:
     image: ${DOCKER_REGISTRY-}gamenews
     build:
@@ -12,7 +13,7 @@ services:
   db:
     image: "mcr.microsoft.com/mssql/server"
     environment:
-      - SA_PASSWORD=Qwerty123$$% 
+      - SA_PASSWORD=Oksan@2003 
       - ACCEPT_EULA=Y
     ports:
       - "1433:1433"
