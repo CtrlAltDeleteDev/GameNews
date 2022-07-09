@@ -3,13 +3,13 @@ namespace GameNews.Infrastructure.Entities
 {
 	public class PostTagEntity
 	{
-		public int postId { get; set; }
+		public int PostId { get; set; }
 
-        public PostEntity post { get; set; }
+        public PostEntity Post { get; set; }
 
-        public int tagId { get; set; }
+        public int TagId { get; set; }
 
-        public TagEntity tag { get; set; }
+        public TagEntity Tag { get; set; }
     }
 }
 

@@ -27,72 +27,72 @@ namespace GameNews.Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PostEntity>()
-                .HasOne(r => r.blog)
-                .WithMany(t => t.posts)
+                .HasOne(r => r.Blog)
+                .WithMany(t => t.Posts)
                 .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<PostTagEntity>()
-              .HasKey(t => new { t.postId, t.tagId });
+              .HasKey(t => new { t.PostId, t.TagId });
 
             modelBuilder.Entity<PostTagEntity>()
-                .HasOne(pt => pt.post)
-                .WithMany(p => p.postTags)
-                .HasForeignKey(pt => pt.postId)
+                .HasOne(pt => pt.Post)
+                .WithMany(p => p.PostTags)
+                .HasForeignKey(pt => pt.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<PostTagEntity>()
-                .HasOne(pt => pt.tag)
-                .WithMany(t => t.postTags)
-                .HasForeignKey(pt => pt.tagId)
+                .HasOne(pt => pt.Tag)
+                .WithMany(t => t.PostTags)
+                .HasForeignKey(pt => pt.TagId)
                 .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<SubscriptionEntity>()
-             .HasKey(t => new { t.userId, t.blogId });
+             .HasKey(t => new { t.UserId, t.BlogId });
 
             modelBuilder.Entity<SubscriptionEntity>()
-               .HasOne(pt => pt.user)
-               .WithMany(p => p.subscriptions)
-               .HasForeignKey(pt => pt.userId)
+               .HasOne(pt => pt.User)
+               .WithMany(p => p.Subscriptions)
+               .HasForeignKey(pt => pt.UserId)
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SubscriptionEntity>()
-                .HasOne(pt => pt.blog)
-                .WithMany(t => t.subscriptions)
-                .HasForeignKey(pt => pt.blogId)
+                .HasOne(pt => pt.Blog)
+                .WithMany(t => t.Subscriptions)
+                .HasForeignKey(pt => pt.BlogId)
                 .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<OwnershipEntity>()
-             .HasKey(t => new { t.userId, t.blogId });
+             .HasKey(t => new { t.UserId, t.BlogId });
 
             modelBuilder.Entity<OwnershipEntity>()
-               .HasOne(pt => pt.user)
-               .WithMany(p => p.ownerships)
-               .HasForeignKey(pt => pt.userId)
+               .HasOne(pt => pt.User)
+               .WithMany(p => p.Ownerships)
+               .HasForeignKey(pt => pt.UserId)
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<OwnershipEntity>()
-                .HasOne(pt => pt.blog)
-                .WithMany(t => t.ownerships)
-                .HasForeignKey(pt => pt.blogId)
+                .HasOne(pt => pt.Blog)
+                .WithMany(t => t.Ownerships)
+                .HasForeignKey(pt => pt.BlogId)
                 .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<LikesEntity>()
-            .HasKey(t => new { t.userId, t.postId });
+            .HasKey(t => new { t.UserId, t.PostId });
 
             modelBuilder.Entity<LikesEntity>()
-               .HasOne(pt => pt.user)
-               .WithMany(p => p.likes)
-               .HasForeignKey(pt => pt.userId)
+               .HasOne(pt => pt.User)
+               .WithMany(p => p.Likes)
+               .HasForeignKey(pt => pt.UserId)
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<LikesEntity>()
-                .HasOne(pt => pt.post)
-                .WithMany(t => t.likes)
-                .HasForeignKey(pt => pt.postId)
+                .HasOne(pt => pt.Post)
+                .WithMany(t => t.Likes)
+                .HasForeignKey(pt => pt.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

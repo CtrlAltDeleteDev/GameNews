@@ -3,13 +3,13 @@ namespace GameNews.Infrastructure.Entities
 {
 	public class UserEntity
 	{
-		public int id { get; set; }
+		public int Id { get; set; }
 
-        public IEnumerable<SubscriptionEntity> subscriptions { get; set; }
+        public IEnumerable<SubscriptionEntity> Subscriptions { get; set; }
 
-        public IEnumerable<OwnershipEntity> ownerships { get; set; }
+        public IEnumerable<OwnershipEntity> Ownerships { get; set; }
 
-        public IEnumerable<LikesEntity> likes { get; set; }
+        public IEnumerable<LikesEntity> Likes { get; set; }
     }
 }
 

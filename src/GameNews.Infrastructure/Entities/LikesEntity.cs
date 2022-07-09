@@ -3,13 +3,13 @@ namespace GameNews.Infrastructure.Entities
 {
 	public class LikesEntity
 	{
-		public int userId;
+		public int UserId { get; set; }
 
-		public UserEntity user;
+		public UserEntity User { get; set; }
 
-		public int postId;
+        public int PostId { get; set; }
 
-		public PostEntity post;
-	}
+        public PostEntity Post { get; set; }
+    }
 }
 
