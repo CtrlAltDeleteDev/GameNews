@@ -10,19 +10,19 @@ namespace GameNews.Infrastructure.Context
 
         }
 
-        public DbSet<BlogEntity> blogs { get; set; }
+        public DbSet<BlogEntity> Blogs { get; set; }
 
-        public DbSet<PostEntity> posts { get; set; }
+        public DbSet<PostEntity> Posts { get; set; }
 
-        public DbSet<TagEntity> tags { get; set; }
+        public DbSet<TagEntity> Tags { get; set; }
 
-        public DbSet<OwnershipEntity> ownerships { get; set; }
+        public DbSet<OwnershipEntity> Ownerships { get; set; }
 
-        public DbSet<SubscriptionEntity> subscriptions { get; set; }
+        public DbSet<SubscriptionEntity> Subscriptions { get; set; }
 
-        public DbSet<PostTagEntity> postTags { get; set; }
+        public DbSet<PostTagEntity> PostTags { get; set; }
 
-        public DbSet<LikesEntity> likes { get; set; }
+        public DbSet<LikesEntity> Likes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
