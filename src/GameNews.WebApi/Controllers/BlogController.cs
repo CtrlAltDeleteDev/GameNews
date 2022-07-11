@@ -1,58 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using GameNews.ApplicationCore;
-using GameNews.Infrastructure.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using GameNews.Infrastructure.Context;
+using MediatR;
+using GameNews.ApplicationCore.ToDoItems.Queries;
+using GameNews.ApplicationCore.ToDoItems.Commands;
+using GameNews.Infrastructure.Entities;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+// dotnet ef database update --startup-project "src/GameNews.WebApi" --project "src/GameNews.Infrastructure"
+
+//extension methods
+//async await
 
 namespace GameNews.WebApi.Controllers
 {
     [Route("api/[controller]")]
-    public class BlogController : Controller
+    public class BlogController : ControllerBase
     {
-        private readonly AppDbContext _dbContext;
+        private readonly IMediator _mediator; 
 
-        public BlogController(AppDbContext dbContext)
+        public BlogController(IMediator mediator)
         {
-            _dbContext = dbContext;
+            _mediator = mediator;
         }
 
-        // GET: api/values
         [HttpGet]
-        public IEnumerable<BlogEntity> Get()
+        public async Task<IActionResult> Get()
         {
-            return _dbContext.blogs.ToList();
+            var query = new GetAllBlogsQuery();
+            List<BlogEntity> result = await _mediator.Send(query);
+            return Ok(result);
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var query = new GetBlogByIdQuery(id);
+            BlogEntity result = await _mediator.Send(query);
+            if (result != null)
+                return Ok(result);
+            return NotFound();
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post(BlogEntity blogEntity)
+        public async Task<IActionResult> Post(string name, string description)
         {
-            _dbContext.blogs.Add(blogEntity);
-            _dbContext.SaveChanges();
+            var command = new CreateBlogCommand(name, description);
+            BlogEntity result = await _mediator.Send(command);
+            return Ok(result);
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(int id, string name, string description)
         {
+            if (name != null && description != null)
+            {
+                var command = new EditBlogCommand(id, name, description);
+                BlogEntity result = await _mediator.Send(command);
+                if (result != null)
+                    return Ok(result);
+                return NotFound();
+            }
+            return NoContent();
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var command = new DeleteBlogCommand(id);
+            BlogEntity result = await _mediator.Send(command);
+            if (result != null)
+                return Ok(result);
+            return NotFound();
         }
     }
 }

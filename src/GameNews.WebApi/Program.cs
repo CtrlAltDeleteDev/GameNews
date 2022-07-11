@@ -1,4 +1,7 @@
-﻿using GameNews.Infrastructure.Context;
+﻿using GameNews.ApplicationCore;
+using GameNews.ApplicationCore.Interfaces;
+using GameNews.ApplicationCore.ToDoItems.Repositories;
+using GameNews.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +18,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Mediatr
+builder.Services.AddGameNewsApplication();
+
+//Dependency injection
+builder.Services.AddScoped<IBlogRepository,BlogRepository>();
 
 var app = builder.Build();
 
@@ -33,3 +42,4 @@ app.MapControllers();
 
 app.Run();
 
+//dotnet ef migrations add <MigrationName> --startup-project <ProjectWithDesignPackage> --project <InfrastructureProject>
