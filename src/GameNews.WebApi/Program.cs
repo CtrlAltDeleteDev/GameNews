@@ -24,6 +24,7 @@ builder.Services.AddGameNewsApplication();
 
 //Dependency injection
 builder.Services.AddScoped<IBlogRepository,BlogRepository>();
+builder.Services.AddScoped<IPostRepository,PostRepository>();
 
 var app = builder.Build();
 

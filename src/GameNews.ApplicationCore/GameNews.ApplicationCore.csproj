@@ -7,22 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ToDoItems\" />
-    <None Remove="ToDoItems\Commands\" />
-    <None Remove="ToDoItems\EventHandlers\" />
-    <None Remove="ToDoItems\Queries\" />
     <None Remove="MediatR" />
     <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
-    <None Remove="ToDoItems\Repositories\" />
     <None Remove="Interfaces\" />
+    <None Remove="Commands\" />
+    <None Remove="EventHandlers\" />
+    <None Remove="Queries\" />
+    <None Remove="Repositories\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ToDoItems\" />
-    <Folder Include="ToDoItems\Commands\" />
-    <Folder Include="ToDoItems\EventHandlers\" />
-    <Folder Include="ToDoItems\Queries\" />
-    <Folder Include="ToDoItems\Repositories\" />
     <Folder Include="Interfaces\" />
+    <Folder Include="Commands\" />
+    <Folder Include="EventHandlers\" />
+    <Folder Include="Queries\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.1" />

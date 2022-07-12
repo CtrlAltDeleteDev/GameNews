@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using GameNews.Infrastructure.Context;
 using MediatR;
 using GameNews.ApplicationCore.ToDoItems.Queries;
 using GameNews.ApplicationCore.ToDoItems.Commands;
@@ -51,15 +50,11 @@ namespace GameNews.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, string name, string description)
         {
-            if (name != null && description != null)
-            {
-                var command = new EditBlogCommand(id, name, description);
-                BlogEntity result = await _mediator.Send(command);
-                if (result != null)
-                    return Ok(result);
-                return NotFound();
-            }
-            return NoContent();
+            var command = new EditBlogCommand(id, name, description); // do not understand how to implement nocontent here
+            BlogEntity result = await _mediator.Send(command);
+            if (result != null)
+                return Ok(result);
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
