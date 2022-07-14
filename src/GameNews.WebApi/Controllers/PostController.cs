@@ -1,6 +1,10 @@
 ﻿using GameNews.Infrastructure.DataTransferObjects;
+using GameNews.ApplicationCore.Commands;
+using GameNews.ApplicationCore.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using GameNews.ApplicationCore.Exceptions;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,9 +15,9 @@ namespace GameNews.WebApi.Controllers
     {
         private readonly IMediator _mediator;
 
-        public PostController (IMediator mediatr)
+        public PostController (IMediator mediator)
         {
-            _mediator = mediatr;
+            _mediator = mediator;
         }
 
         // GET: api/values
@@ -21,7 +25,16 @@ namespace GameNews.WebApi.Controllers
         public async Task<IActionResult> Get()
         {
             var query = new GetAllPostsQuery();
-            List<PostEntity> result = await _mediator.Send(query);
+            var result = new List<PostExtendedDto>();
+            try
+            {
+                result = await _mediator.Send(query);
+            }
+            catch (PostNotFoundException)
+            {
+                return NotFound();
+            }
+
             return Ok(result);
         }
 
@@ -30,33 +43,77 @@ namespace GameNews.WebApi.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var query = new GetPostByIdQuery(id);
-            PostEntity result = await _mediator.Send(query);
-            if (result != null)
-                return Ok(result);
-            return NotFound();
+            PostExtendedDto result;
+
+            try
+            {
+                result = await _mediator.Send(query);
+            }
+            catch(PostNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> Post(string context, int blogId)
+        public async Task<IActionResult> Post([FromBody] PostDto post)
         {
-            var command = new CreatePostCommand(context, blogId);
-            PostDto result = await _mediator.Send(command);
-            if (result != null)
-                return Ok(result);
-            return NotFound();
+            var command = new CreatePostCommand(post);
+            PostExtendedDto result;
+
+            try
+            {
+               result = await _mediator.Send(command);
+            }
+            catch (BlogNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put([FromBody] PostExtendedDto post)
         {
+            var command = new EditPostCommand(post);
+            PostExtendedDto result;
+
+            try
+            {
+                result = await _mediator.Send(command);
+            }
+            catch (Exception ex)
+            {
+                if (ex is PostNotFoundException || ex is BlogNotFoundException)
+                    return NotFound();
+                throw;// why must it be here??????
+            }
+            
+            return Ok(result);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var command = new DeletePostCommand(id);
+            PostExtendedDto result;
+
+            try
+            {
+                result = await _mediator.Send(command);
+            }
+            catch(PostNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
     }
 }

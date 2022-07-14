@@ -3,11 +3,11 @@ using MediatR;
 
 namespace GameNews.ApplicationCore.Commands
 {
-	public class DeleteBlogCommand : IRequest<BlogExtendedDto>
+	public class DeletePostCommand : IRequest<PostExtendedDto>
 	{
-		public int Id;
+		public int Id { get; set; }
 
-		public DeleteBlogCommand(int id)
+		public DeletePostCommand(int id)
 		{
 			Id = id;
 		}

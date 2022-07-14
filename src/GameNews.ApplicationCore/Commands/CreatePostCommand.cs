@@ -1,20 +1,18 @@
-﻿using System;
-using GameNews.Infrastructure.DataTransferObjects;
-using GameNews.Infrastructure.Entities;
+﻿using GameNews.Infrastructure.DataTransferObjects;
 using MediatR;
 
-namespace GameNews.ApplicationCore.ToDoItems.Commands
+namespace GameNews.ApplicationCore.Commands
 {
-	public class CreatePostCommand : IRequest<PostDto>
+	public class CreatePostCommand : IRequest<PostExtendedDto>
 	{
 		public string Context;
 
 		public int BlogId;
 
-        public CreatePostCommand(string context, int blogId)
+        public CreatePostCommand(PostDto dto)
 		{
-			Context = context;
-			BlogId = blogId;
+			Context = dto.Context;
+			BlogId = dto.BlogId;
 		}
 	}
 }

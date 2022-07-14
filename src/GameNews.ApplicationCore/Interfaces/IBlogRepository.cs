@@ -6,9 +6,9 @@ namespace GameNews.ApplicationCore.Interfaces
 	{
 		public List<BlogEntity> GetAllBlogs();
 		public BlogEntity GetBlogById(int id);
-		public BlogEntity CreateBlog(string name, string desc);
-        public BlogEntity EditBlog(int id, string name, string desc);
-		public BlogEntity DeleteBlog(int id);
+		public BlogEntity CreateBlog(BlogEntity blog);
+        public BlogEntity EditBlog(BlogEntity blog);
+		public BlogEntity DeleteBlog(BlogEntity blog);
     }
 }
 

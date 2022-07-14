@@ -1,25 +1,36 @@
 ﻿using System;
 using GameNews.ApplicationCore.Interfaces;
-using GameNews.ApplicationCore.ToDoItems.Commands;
+using GameNews.ApplicationCore.Commands;
 using GameNews.Infrastructure.DataTransferObjects;
 using MediatR;
+using GameNews.ApplicationCore.Exceptions;
+using GameNews.Infrastructure.Entities;
 
-namespace GameNews.ApplicationCore.ToDoItems.EventHandlers
+namespace GameNews.ApplicationCore.EventHandlers
 {
-	public class CreatePostHandler : IRequestHandler<CreatePostCommand,PostDto>
+	public class CreatePostHandler : IRequestHandler<CreatePostCommand,PostExtendedDto>
 	{
         private readonly IPostRepository _postRepository;
+        private readonly IBlogRepository _blogRepository;
+        private readonly IMapper _mapper;
 
-		public CreatePostHandler(IPostRepository postRepository)
+		public CreatePostHandler(IPostRepository postRepository, IMapper mapper, IBlogRepository blogRepository)
 		{
             _postRepository = postRepository;
+            _blogRepository = blogRepository;
+            _mapper = mapper;
 		}
 
-        public Task<PostDto> Handle(CreatePostCommand request, CancellationToken cancellationToken)
+        public Task<PostExtendedDto> Handle(CreatePostCommand request, CancellationToken cancellationToken)
         {
-            var result = _postRepository.CreatePost(request.Context, request.BlogId);
-            var dto = new PostDto(result.Context, result.BlogId);
-            return Task.FromResult(dto);
+            if (_blogRepository.GetBlogById(request.BlogId) != null)
+            {
+                PostEntity post = _mapper.Convert(request);
+                PostEntity result = _postRepository.CreatePost(post);
+                PostExtendedDto dto = _mapper.Convert(result);
+                return Task.FromResult(dto);
+            }
+            throw new BlogNotFoundException();
         }
     }
 }

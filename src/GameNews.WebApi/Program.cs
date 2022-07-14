@@ -1,6 +1,7 @@
 ﻿using GameNews.ApplicationCore;
 using GameNews.ApplicationCore.Interfaces;
-using GameNews.ApplicationCore.ToDoItems.Repositories;
+using GameNews.ApplicationCore.Mapping;
+using GameNews.ApplicationCore.Repositories;
 using GameNews.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,7 @@ builder.Services.AddGameNewsApplication();
 //Dependency injection
 builder.Services.AddScoped<IBlogRepository,BlogRepository>();
 builder.Services.AddScoped<IPostRepository,PostRepository>();
+builder.Services.AddScoped<IMapper,Mapper>();
 
 var app = builder.Build();
 

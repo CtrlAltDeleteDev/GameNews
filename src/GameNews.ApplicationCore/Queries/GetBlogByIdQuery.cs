@@ -1,9 +1,9 @@
-﻿using GameNews.Infrastructure.Entities;
+﻿using GameNews.Infrastructure.DataTransferObjects;
 using MediatR;
 
-namespace GameNews.ApplicationCore.ToDoItems.Queries
+namespace GameNews.ApplicationCore.Queries
 {
-	public class GetBlogByIdQuery : IRequest<BlogEntity>
+	public class GetBlogByIdQuery : IRequest<BlogExtendedDto>
 	{
 		public int Id;
 

@@ -1,24 +1,32 @@
-﻿using System;
+﻿using GameNews.ApplicationCore.Exceptions;
 using GameNews.ApplicationCore.Interfaces;
-using GameNews.ApplicationCore.ToDoItems.Queries;
+using GameNews.ApplicationCore.Queries;
+using GameNews.Infrastructure.DataTransferObjects;
 using GameNews.Infrastructure.Entities;
 using MediatR;
 
-namespace GameNews.ApplicationCore.ToDoItems.EventHandlers
+namespace GameNews.ApplicationCore.EventHandlers
 {
-	public class GetPostByIdHandler : IRequestHandler<GetPostByIdQuery,PostEntity>
+	public class GetPostByIdHandler : IRequestHandler<GetPostByIdQuery,PostExtendedDto>
 	{
         private readonly IPostRepository _postRepository;
+        private readonly IMapper _mapper;
 
-		public GetPostByIdHandler(IPostRepository postRepository)
+        public GetPostByIdHandler(IPostRepository postRepository, IMapper mapper)
 		{
             _postRepository = postRepository;
+            _mapper = mapper;
 		}
 
-        public Task<PostEntity> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
+        public Task<PostExtendedDto> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = _postRepository.GetPostById(request.Id);
-            return Task.FromResult(result);
+            PostEntity post = _postRepository.GetPostById(request.Id);
+            if (post != null)
+            {
+                PostExtendedDto result = _mapper.Convert(post);
+                return Task.FromResult(result);
+            }
+            throw new PostNotFoundException();
         }
     }
 }

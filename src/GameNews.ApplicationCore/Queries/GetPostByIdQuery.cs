@@ -1,10 +1,9 @@
-﻿using System;
-using GameNews.Infrastructure.Entities;
+﻿using GameNews.Infrastructure.DataTransferObjects;
 using MediatR;
 
-namespace GameNews.ApplicationCore.ToDoItems.Queries
+namespace GameNews.ApplicationCore.Queries
 {
-	public class GetPostByIdQuery : IRequest<PostEntity>
+	public class GetPostByIdQuery : IRequest<PostExtendedDto>
 	{
 		public int Id;
 

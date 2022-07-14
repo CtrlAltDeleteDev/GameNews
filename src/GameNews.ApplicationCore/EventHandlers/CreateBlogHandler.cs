@@ -1,24 +1,28 @@
-﻿using System;
-using GameNews.ApplicationCore.Interfaces;
-using GameNews.ApplicationCore.ToDoItems.Commands;
+﻿using GameNews.ApplicationCore.Interfaces;
+using GameNews.ApplicationCore.Commands;
 using GameNews.Infrastructure.Entities;
 using MediatR;
+using GameNews.Infrastructure.DataTransferObjects;
 
-namespace GameNews.ApplicationCore.ToDoItems.EventHandlers
+namespace GameNews.ApplicationCore.EventHandlers
 {
-	public class CreateBlogHandler : IRequestHandler<CreateBlogCommand, BlogEntity>
+	public class CreateBlogHandler : IRequestHandler<CreateBlogCommand, BlogExtendedDto>
 	{
         private readonly IBlogRepository _blogRepository;
+        private readonly IMapper _mapper;
 
-        public CreateBlogHandler(IBlogRepository blogRepository)
+        public CreateBlogHandler(IBlogRepository blogRepository, IMapper mapper)
         {
             _blogRepository = blogRepository;
+            _mapper = mapper;
         }
 
-        public Task<BlogEntity> Handle(CreateBlogCommand request, CancellationToken cancellationToken)
+        Task<BlogExtendedDto> IRequestHandler<CreateBlogCommand, BlogExtendedDto>.Handle(CreateBlogCommand request, CancellationToken cancellationToken)
         {
-            var order = _blogRepository.CreateBlog(request.Title, request.Description);
-            return Task.FromResult(order);
+            BlogEntity blog = _mapper.Convert(request);
+            BlogEntity result = _blogRepository.CreateBlog(blog);
+            BlogExtendedDto dto = _mapper.Convert(result);
+            return Task.FromResult(dto);
         }
     }
 }

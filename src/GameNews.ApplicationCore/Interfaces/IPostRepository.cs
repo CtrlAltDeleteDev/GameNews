@@ -7,7 +7,9 @@ namespace GameNews.ApplicationCore.Interfaces
 	{
 		public List<PostEntity> GetAllPosts();
 		public PostEntity GetPostById(int id);
-		public PostEntity CreatePost(string context, int blogId);
-	}
+		public PostEntity CreatePost(PostEntity post);
+        public PostEntity EditPost(PostEntity post);
+        public PostEntity DeletePost(PostEntity post);
+    }
 }
 

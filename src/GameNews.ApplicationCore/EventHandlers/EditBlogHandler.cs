@@ -1,24 +1,34 @@
-﻿using System;
-using GameNews.ApplicationCore.Interfaces;
-using GameNews.ApplicationCore.ToDoItems.Commands;
+﻿using GameNews.ApplicationCore.Interfaces;
+using GameNews.ApplicationCore.Commands;
 using GameNews.Infrastructure.Entities;
 using MediatR;
+using GameNews.Infrastructure.DataTransferObjects;
+using GameNews.ApplicationCore.Exceptions;
 
-namespace GameNews.ApplicationCore.ToDoItems.EventHandlers
+namespace GameNews.ApplicationCore.EventHandlers
 {
-	public class EditBlogHandler : IRequestHandler<EditBlogCommand, BlogEntity>
+	public class EditBlogHandler : IRequestHandler<EditBlogCommand, BlogExtendedDto>
 	{
         private readonly IBlogRepository _blogRepository;
+        private readonly IMapper _mapper;
 
-		public EditBlogHandler(IBlogRepository blogRepository)
+        public EditBlogHandler(IBlogRepository blogRepository, IMapper mapper)
 		{
             _blogRepository = blogRepository;
+            _mapper = mapper;
 		}
 
-        public Task<BlogEntity> Handle(EditBlogCommand request, CancellationToken cancellationToken)
+        Task<BlogExtendedDto> IRequestHandler<EditBlogCommand, BlogExtendedDto>.Handle(EditBlogCommand request, CancellationToken cancellationToken)
         {
-            var result = _blogRepository.EditBlog(request.Id, request.Title, request.Description);
-            return Task.FromResult(result);
+            BlogEntity check = _blogRepository.GetBlogById(request.Id);
+            if (check != null)
+            {
+                BlogEntity blog = _mapper.Convert(request);
+                BlogEntity result = _blogRepository.EditBlog(blog);
+                BlogExtendedDto dto = _mapper.Convert(result);
+                return Task.FromResult(dto);
+            }
+            throw new BlogNotFoundException();
         }
     }
 }

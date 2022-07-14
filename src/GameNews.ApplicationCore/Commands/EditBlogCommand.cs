@@ -1,23 +1,22 @@
-﻿using System;
-using GameNews.Infrastructure.Entities;
+﻿using GameNews.Infrastructure.DataTransferObjects;
 using MediatR;
 
-namespace GameNews.ApplicationCore.ToDoItems.Commands
+namespace GameNews.ApplicationCore.Commands
 {
-	public class EditBlogCommand : IRequest<BlogEntity>
+	public class EditBlogCommand : IRequest<BlogExtendedDto>
     {
-        public EditBlogCommand(int id, string title, string desc)
-        {
-            Id = id;
-            Title = title;
-            Description = desc;
-        }
-
         public int Id { get; set; }
 
         public string Title { get; set; }
 
         public string Description { get; set; }
+
+        public EditBlogCommand(int id, BlogDto dto)
+        {
+            Id = id;
+            Title = dto.Title;
+            Description = dto.Desc;
+        }
     }
 }
 

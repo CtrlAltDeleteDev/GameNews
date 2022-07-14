@@ -2,7 +2,7 @@
 using GameNews.Infrastructure.Context;
 using GameNews.Infrastructure.Entities;
 
-namespace GameNews.ApplicationCore.ToDoItems.Repositories
+namespace GameNews.ApplicationCore.Repositories
 {
 	public class BlogRepository : IBlogRepository
 	{
@@ -25,39 +25,27 @@ namespace GameNews.ApplicationCore.ToDoItems.Repositories
             return result;
         }
 
-        public BlogEntity CreateBlog(string name, string desc)
+        public BlogEntity CreateBlog(BlogEntity blog)
         {
-            var blog = new BlogEntity();
-            blog.Name = name;
-            blog.Description = desc;
             _dbContext.Blogs.Add(blog);
             _dbContext.SaveChanges();
             return blog;
         }
 
-        public BlogEntity EditBlog(int id, string name, string desc)
+        public BlogEntity EditBlog(BlogEntity blog)
         {
-            var tmp = _dbContext.Blogs.Where(x => x.Id == id).FirstOrDefault();
-            if (tmp != null)
-            {
-                tmp.Name = name;
-                tmp.Description = desc;
-                _dbContext.SaveChanges();
-                return tmp;
-            }
-            return null;
+            var tmp = _dbContext.Blogs.Where(x => x.Id == blog.Id).FirstOrDefault();
+            tmp.Name = blog.Name;
+            tmp.Description = blog.Description;
+            _dbContext.SaveChanges();
+            return tmp;
         }
 
-        public BlogEntity DeleteBlog(int id)
+        public BlogEntity DeleteBlog(BlogEntity blog)
         {
-            var tmp = _dbContext.Blogs.Where(x => x.Id == id).FirstOrDefault();
-            if (tmp != null)
-            {
-                _dbContext.Blogs.Remove(tmp);
-                _dbContext.SaveChanges();
-                return tmp;
-            }
-            return null;
+            _dbContext.Blogs.Remove(blog);
+            _dbContext.SaveChanges();
+            return blog;
         }
     }
 }

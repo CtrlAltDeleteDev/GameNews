@@ -3,7 +3,7 @@ using GameNews.ApplicationCore.Interfaces;
 using GameNews.Infrastructure.Context;
 using GameNews.Infrastructure.Entities;
 
-namespace GameNews.ApplicationCore.ToDoItems.Repositories
+namespace GameNews.ApplicationCore.Repositories
 {
 	public class PostRepository : IPostRepository
 	{
@@ -26,20 +26,28 @@ namespace GameNews.ApplicationCore.ToDoItems.Repositories
 			return result;
         }
 
-		public PostEntity CreatePost(string context, int blogId)
+		public PostEntity CreatePost(PostEntity post)
+		{
+			_dbContext.Posts.Add(post);
+			_dbContext.SaveChanges();
+			return post;
+		}
+
+        public PostEntity EditPost(PostEntity post)
         {
-			var blog = _dbContext.Blogs.Where(x => x.Id == blogId).FirstOrDefault();
-			if (blog != null)
-            {
-                var tmp = new PostEntity();
-                tmp.Context = context;
-                tmp.BlogId = blogId;
-                _dbContext.Posts.Add(tmp);
-                _dbContext.SaveChanges();
-                return tmp;
-            }
-            return null;
+			var tmp = GetPostById(post.Id);
+			tmp.Context = post.Context;
+			tmp.BlogId = post.BlogId;
+            _dbContext.SaveChanges();
+			return tmp;
         }
-	}
+
+		public PostEntity DeletePost(PostEntity post)
+        {
+			_dbContext.Posts.Remove(post);
+			_dbContext.SaveChanges();
+			return post;
+        }
+    }
 }
 

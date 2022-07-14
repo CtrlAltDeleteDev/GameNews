@@ -1,5 +1,4 @@
-﻿using System;
-namespace GameNews.Infrastructure.Entities
+﻿namespace GameNews.Infrastructure.Entities
 {
 	public class BlogEntity
 	{

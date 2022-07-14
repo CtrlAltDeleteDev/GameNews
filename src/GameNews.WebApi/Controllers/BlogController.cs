@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using GameNews.ApplicationCore.ToDoItems.Queries;
-using GameNews.ApplicationCore.ToDoItems.Commands;
+using GameNews.ApplicationCore.Queries;
+using GameNews.ApplicationCore.Commands;
 using GameNews.Infrastructure.Entities;
+using GameNews.Infrastructure.DataTransferObjects;
+using GameNews.ApplicationCore.Exceptions;
 
 // dotnet ef database update --startup-project "src/GameNews.WebApi" --project "src/GameNews.Infrastructure"
 
@@ -14,7 +16,7 @@ namespace GameNews.WebApi.Controllers
     [Route("api/[controller]")]
     public class BlogController : ControllerBase
     {
-        private readonly IMediator _mediator; 
+        private readonly IMediator _mediator;
 
         public BlogController(IMediator mediator)
         {
@@ -25,7 +27,17 @@ namespace GameNews.WebApi.Controllers
         public async Task<IActionResult> Get()
         {
             var query = new GetAllBlogsQuery();
-            List<BlogEntity> result = await _mediator.Send(query);
+            List<Infrastructure.DataTransferObjects.BlogExtendedDto> result;
+
+            try
+            {
+                result = await _mediator.Send(query);
+            }
+            catch (BlogNotFoundException)
+            {
+                return NotFound();
+            }
+
             return Ok(result);
         }
 
@@ -33,39 +45,64 @@ namespace GameNews.WebApi.Controllers
         public async Task<IActionResult> Get(int id)
         {
             var query = new GetBlogByIdQuery(id);
-            BlogEntity result = await _mediator.Send(query);
-            if (result != null)
-                return Ok(result);
-            return NotFound();
+            Infrastructure.DataTransferObjects.BlogExtendedDto result;
+
+            try
+            {
+                result = await _mediator.Send(query);
+            }
+            catch(BlogNotFoundException)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(string name, string description)
+        public async Task<IActionResult> Post([FromBody] BlogDto blog)
         {
-            var command = new CreateBlogCommand(name, description);
-            BlogEntity result = await _mediator.Send(command);
+            var command = new CreateBlogCommand(blog);
+            Infrastructure.DataTransferObjects.BlogExtendedDto result = await _mediator.Send<Infrastructure.DataTransferObjects.BlogExtendedDto>(command);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, string name, string description)
+        public async Task<IActionResult> Put(int id, [FromBody] BlogDto blog)
         {
-            var command = new EditBlogCommand(id, name, description); // do not understand how to implement nocontent here
-            BlogEntity result = await _mediator.Send(command);
-            if (result != null)
-                return Ok(result);
-            return NotFound();
+            var command = new EditBlogCommand(id, blog);
+            Infrastructure.DataTransferObjects.BlogExtendedDto result;
+
+            try
+            {
+                result = await _mediator.Send(command);
+            }
+            catch(BlogNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var command = new DeleteBlogCommand(id);
-            BlogEntity result = await _mediator.Send(command);
-            if (result != null)
-                return Ok(result);
-            return NotFound();
+            Infrastructure.DataTransferObjects.BlogExtendedDto result;
+
+            try
+            {
+                result = await _mediator.Send(command);
+            }
+            catch(BlogNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
+
     }
 }
+
 
