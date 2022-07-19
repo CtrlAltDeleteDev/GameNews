@@ -21,14 +21,14 @@ namespace GameNews.ApplicationCore.EventHandlers
             _mapper = mapper;
 		}
 
-        public Task<PostExtendedDto> Handle(CreatePostCommand request, CancellationToken cancellationToken)
+        public async Task<PostExtendedDto> Handle(CreatePostCommand request, CancellationToken cancellationToken)
         {
             if (_blogRepository.GetBlogById(request.BlogId) != null)
             {
-                PostEntity post = _mapper.Convert(request);
-                PostEntity result = _postRepository.CreatePost(post);
-                PostExtendedDto dto = _mapper.Convert(result);
-                return Task.FromResult(dto);
+                PostEntity post = await _mapper.Convert(request);
+                PostEntity result = await _postRepository.CreatePost(post);
+                PostExtendedDto dto = await _mapper.Convert(result);
+                return dto;
             }
             throw new BlogNotFoundException();
         }

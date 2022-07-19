@@ -18,13 +18,13 @@ namespace GameNews.ApplicationCore.EventHandlers
             _mapper = mapper;
 		}
 
-        Task<List<PostExtendedDto>> IRequestHandler<GetAllPostsQuery, List<PostExtendedDto>>.Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
+        public async Task<List<PostExtendedDto>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
         {
-            List<PostEntity> posts = _postRepository.GetAllPosts();
+            List<PostEntity> posts = await _postRepository.GetAllPosts();
             if (posts.FirstOrDefault() != null)
             {
-                List<PostExtendedDto> result = _mapper.Convert(posts);
-                return Task.FromResult(result);
+                List<PostExtendedDto> result = await _mapper.Convert(posts);
+                return result;
             }
             throw new PostNotFoundException();
         }

@@ -13,35 +13,35 @@ namespace GameNews.ApplicationCore.Repositories
             _dbContext = dbContext;
         }
 
-        public List<BlogEntity> GetAllBlogs()
+        public async Task<List<BlogEntity>> GetAllBlogs()
         {
             var result = _dbContext.Blogs.ToList();
             return result;
         }
 
-        public BlogEntity GetBlogById(int id)
+        public async Task<BlogEntity> GetBlogById(int id)
         {
             var result = _dbContext.Blogs.Where(x => x.Id == id).FirstOrDefault();
             return result;
         }
 
-        public BlogEntity CreateBlog(BlogEntity blog)
+        public async Task<BlogEntity> CreateBlog(BlogEntity blog)
         {
             _dbContext.Blogs.Add(blog);
             _dbContext.SaveChanges();
             return blog;
         }
 
-        public BlogEntity EditBlog(BlogEntity blog)
+        public async Task<BlogEntity> EditBlog(BlogEntity blog)
         {
-            var tmp = _dbContext.Blogs.Where(x => x.Id == blog.Id).FirstOrDefault();
+            var tmp = await GetBlogById(blog.Id);
             tmp.Name = blog.Name;
             tmp.Description = blog.Description;
             _dbContext.SaveChanges();
             return tmp;
         }
 
-        public BlogEntity DeleteBlog(BlogEntity blog)
+        public async Task<BlogEntity> DeleteBlog(BlogEntity blog)
         {
             _dbContext.Blogs.Remove(blog);
             _dbContext.SaveChanges();

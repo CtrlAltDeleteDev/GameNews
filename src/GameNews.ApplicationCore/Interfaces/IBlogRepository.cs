@@ -4,11 +4,11 @@ namespace GameNews.ApplicationCore.Interfaces
 {
 	public interface IBlogRepository
 	{
-		public List<BlogEntity> GetAllBlogs();
-		public BlogEntity GetBlogById(int id);
-		public BlogEntity CreateBlog(BlogEntity blog);
-        public BlogEntity EditBlog(BlogEntity blog);
-		public BlogEntity DeleteBlog(BlogEntity blog);
+		public Task<List<BlogEntity>> GetAllBlogs();
+		public Task<BlogEntity> GetBlogById(int id);
+		public Task<BlogEntity> CreateBlog(BlogEntity blog);
+        public Task<BlogEntity> EditBlog(BlogEntity blog);
+		public Task<BlogEntity> DeleteBlog(BlogEntity blog);
     }
 }
 

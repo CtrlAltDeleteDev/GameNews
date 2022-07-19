@@ -18,14 +18,14 @@ namespace GameNews.ApplicationCore.EventHandlers
             _mapper = mapper;
 		}
 
-        public Task<PostExtendedDto> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+        public async Task<PostExtendedDto> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
-           PostEntity post = _postRepository.GetPostById(request.Id);
+           PostEntity post = await _postRepository.GetPostById(request.Id);
            if (post != null)
            {
-                PostEntity deletion = _postRepository.DeletePost(post);
-                PostExtendedDto result = _mapper.Convert(deletion);
-                return Task.FromResult(result);
+                PostEntity deletion = await _postRepository.DeletePost(post);
+                PostExtendedDto result = await _mapper.Convert(deletion);
+                return result;
            }
             throw new PostNotFoundException();
         }

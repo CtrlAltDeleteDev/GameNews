@@ -7,13 +7,13 @@ namespace GameNews.ApplicationCore.Mapping
 {
 	public class Mapper : IMapper
 	{
-        public PostExtendedDto Convert(PostEntity post)
+        public async Task<PostExtendedDto> Convert(PostEntity post)
         {
             var result = new PostExtendedDto(post.Id, post.Context, post.BlogId);
             return result;
         }
 
-        public List<PostExtendedDto> Convert(List<PostEntity> posts)
+        public async Task<List<PostExtendedDto>> Convert(List<PostEntity> posts)
         {
             var list = new List<PostExtendedDto>();
             foreach (var obj in posts)
@@ -21,7 +21,7 @@ namespace GameNews.ApplicationCore.Mapping
             return list;
         }
 
-        public List<BlogExtendedDto> Convert(List<BlogEntity> posts)
+        public async Task<List<BlogExtendedDto>> Convert(List<BlogEntity> posts)
         {
             var list = new List<BlogExtendedDto>();
             foreach (var obj in posts)
@@ -29,7 +29,7 @@ namespace GameNews.ApplicationCore.Mapping
             return list;
         }
 
-        public PostEntity Convert(CreatePostCommand command)
+        public async Task<PostEntity> Convert(CreatePostCommand command)
         {
             var dto = new PostEntity();
             dto.Context = command.Context;
@@ -37,7 +37,7 @@ namespace GameNews.ApplicationCore.Mapping
             return dto;
         }
 
-        public PostEntity Convert(EditPostCommand command)
+        public async Task<PostEntity> Convert(EditPostCommand command)
         {
             var dto = new PostEntity();
             dto.Id = command.Id;
@@ -46,13 +46,13 @@ namespace GameNews.ApplicationCore.Mapping
             return dto;
         }
 
-        public BlogExtendedDto Convert(BlogEntity blog)
+        public async Task<BlogExtendedDto> Convert(BlogEntity blog)
         {
             var dto = new BlogExtendedDto(blog.Id, blog.Name, blog.Description);
             return dto;
         }
 
-        public BlogEntity Convert(CreateBlogCommand command)
+        public async Task<BlogEntity> Convert(CreateBlogCommand command)
         {
             var dto = new BlogEntity();
             dto.Name = command.Title;
@@ -60,7 +60,7 @@ namespace GameNews.ApplicationCore.Mapping
             return dto;
         }
 
-        public BlogEntity Convert(EditBlogCommand command)
+        public async Task<BlogEntity> Convert(EditBlogCommand command)
         {
             var dto = new BlogEntity();
             dto.Id = command.Id;

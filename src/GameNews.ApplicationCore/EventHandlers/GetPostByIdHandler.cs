@@ -18,13 +18,13 @@ namespace GameNews.ApplicationCore.EventHandlers
             _mapper = mapper;
 		}
 
-        public Task<PostExtendedDto> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
+        public async Task<PostExtendedDto> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
         {
-            PostEntity post = _postRepository.GetPostById(request.Id);
+            PostEntity post = await _postRepository.GetPostById(request.Id);
             if (post != null)
             {
-                PostExtendedDto result = _mapper.Convert(post);
-                return Task.FromResult(result);
+                PostExtendedDto result = await _mapper.Convert(post);
+                return result;
             }
             throw new PostNotFoundException();
         }

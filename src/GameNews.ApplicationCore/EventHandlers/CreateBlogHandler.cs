@@ -17,12 +17,12 @@ namespace GameNews.ApplicationCore.EventHandlers
             _mapper = mapper;
         }
 
-        Task<BlogExtendedDto> IRequestHandler<CreateBlogCommand, BlogExtendedDto>.Handle(CreateBlogCommand request, CancellationToken cancellationToken)
+        public async Task<BlogExtendedDto> Handle(CreateBlogCommand request, CancellationToken cancellationToken)
         {
-            BlogEntity blog = _mapper.Convert(request);
-            BlogEntity result = _blogRepository.CreateBlog(blog);
-            BlogExtendedDto dto = _mapper.Convert(result);
-            return Task.FromResult(dto);
+            BlogEntity blog = await _mapper.Convert(request);
+            BlogEntity result = await _blogRepository.CreateBlog(blog);
+            BlogExtendedDto dto = await _mapper.Convert(result);
+            return dto;
         }
     }
 }

@@ -6,22 +6,22 @@ namespace GameNews.ApplicationCore.Interfaces
 {
 	public interface IMapper
 	{
-		public PostExtendedDto Convert(PostEntity post);
+		public Task<PostExtendedDto> Convert(PostEntity post);
 
-		public List<PostExtendedDto> Convert(List<PostEntity> posts);
+		public Task<List<PostExtendedDto>> Convert(List<PostEntity> posts);
 
-		public PostEntity Convert(CreatePostCommand command);
+		public Task<PostEntity> Convert(CreatePostCommand command);
 
-        public PostEntity Convert(EditPostCommand command);
+        public Task<PostEntity> Convert(EditPostCommand command);
 
 
-        public BlogExtendedDto Convert(BlogEntity blog);
+        public Task<BlogExtendedDto> Convert(BlogEntity blog);
 
-        public List<BlogExtendedDto> Convert(List<BlogEntity> posts);
+        public Task<List<BlogExtendedDto>> Convert(List<BlogEntity> posts);
 
-		public BlogEntity Convert(CreateBlogCommand command);
+		public Task<BlogEntity> Convert(CreateBlogCommand command);
 
-        public BlogEntity Convert(EditBlogCommand command);
+        public Task<BlogEntity> Convert(EditBlogCommand command);
     }
 }
 
