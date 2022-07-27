@@ -2,6 +2,7 @@
 using GameNews.ApplicationCore.Exceptions;
 using GameNews.ApplicationCore.Interfaces;
 using GameNews.Infrastructure.DataTransferObjects;
+using GameNews.Infrastructure.Entities;
 using MediatR;
 
 namespace GameNews.ApplicationCore.EventHandlers
@@ -21,13 +22,13 @@ namespace GameNews.ApplicationCore.EventHandlers
 
         public async Task<PostExtendedDto> Handle(EditPostCommand request, CancellationToken cancellationToken)
         {
-            if (await _postRepository.GetPostById(request.Id) != null)
+            if (await _postRepository.GetPostByIdAsync(request.Id) != null)
             {
-                if (await _blogRepository.GetBlogById(request.BlogId) != null)
+                if (await _blogRepository.GetBlogByIdAsync(request.BlogId) != null)
                 {
-                    var post = await _mapper.Convert(request);
-                    var result = await _postRepository.EditPost(post);
-                    PostExtendedDto dto = await _mapper.Convert(result);
+                    PostEntity post = _mapper.Convert(request);
+                    var result = await _postRepository.EditPostAsync(post);
+                    PostExtendedDto dto = _mapper.Convert(result);
                     return dto;
                 }
                 throw new BlogNotFoundException();

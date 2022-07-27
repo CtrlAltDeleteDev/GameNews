@@ -1,6 +1,7 @@
 ﻿using GameNews.ApplicationCore.Interfaces;
 using GameNews.Infrastructure.Context;
 using GameNews.Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameNews.ApplicationCore.Repositories
 {
@@ -13,38 +14,38 @@ namespace GameNews.ApplicationCore.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<BlogEntity>> GetAllBlogs()
+        public async Task<List<BlogEntity>> GetAllBlogsAsync()
         {
-            var result = _dbContext.Blogs.ToList();
+            var result = await _dbContext.Blogs.ToListAsync();
             return result;
         }
 
-        public async Task<BlogEntity> GetBlogById(int id)
+        public async Task<BlogEntity> GetBlogByIdAsync(int id)
         {
-            var result = _dbContext.Blogs.Where(x => x.Id == id).FirstOrDefault();
+            var result = await _dbContext.Blogs.Where(x => x.Id == id).FirstOrDefaultAsync();
             return result;
         }
 
-        public async Task<BlogEntity> CreateBlog(BlogEntity blog)
+        public async Task<BlogEntity> CreateBlogAsync(BlogEntity blog)
         {
-            _dbContext.Blogs.Add(blog);
-            _dbContext.SaveChanges();
+            await _dbContext.Blogs.AddAsync(blog);
+            await _dbContext.SaveChangesAsync();
             return blog;
         }
 
-        public async Task<BlogEntity> EditBlog(BlogEntity blog)
+        public async Task<BlogEntity> EditBlogAsync(BlogEntity blog)
         {
-            var tmp = await GetBlogById(blog.Id);
+            var tmp = await GetBlogByIdAsync(blog.Id);
             tmp.Name = blog.Name;
             tmp.Description = blog.Description;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return tmp;
         }
 
-        public async Task<BlogEntity> DeleteBlog(BlogEntity blog)
+        public async Task<BlogEntity> DeleteBlogAsync(BlogEntity blog)
         {
             _dbContext.Blogs.Remove(blog);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return blog;
         }
     }

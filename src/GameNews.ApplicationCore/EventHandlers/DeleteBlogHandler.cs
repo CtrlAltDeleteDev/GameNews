@@ -20,11 +20,11 @@ namespace GameNews.ApplicationCore.EventHandlers
 
         public async Task<BlogExtendedDto> Handle(DeleteBlogCommand request, CancellationToken cancellationToken)
         {
-            BlogEntity blog = await _blogRepository.GetBlogById(request.Id);
+            BlogEntity blog = await _blogRepository.GetBlogByIdAsync(request.Id);
             if (blog != null)
             {
-                BlogEntity result = await _blogRepository.DeleteBlog(blog);
-                BlogExtendedDto dto = await _mapper.Convert(result);
+                BlogEntity result = await _blogRepository.DeleteBlogAsync(blog);
+                BlogExtendedDto dto = _mapper.Convert(result);
                 return dto;
             }
             throw new BlogNotFoundException();

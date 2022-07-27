@@ -1,7 +1,7 @@
-﻿using System;
-using GameNews.ApplicationCore.Interfaces;
+﻿using GameNews.ApplicationCore.Interfaces;
 using GameNews.Infrastructure.Context;
 using GameNews.Infrastructure.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace GameNews.ApplicationCore.Repositories
 {
@@ -14,38 +14,38 @@ namespace GameNews.ApplicationCore.Repositories
 			_dbContext = dbContext;
         }
 
-		public async Task<List<PostEntity>> GetAllPosts()
+		public async Task<List<PostEntity>> GetAllPostsAsync()
         {
-			var result = _dbContext.Posts.ToList();
+			var result = await _dbContext.Posts.ToListAsync();
 			return result;
         }
 
-		public async Task<PostEntity> GetPostById(int id)
+		public async Task<PostEntity> GetPostByIdAsync(int id)
         {
-			var result = _dbContext.Posts.Where(x => x.Id == id).FirstOrDefault();
+			var result = await _dbContext.Posts.Where(x => x.Id == id).FirstOrDefaultAsync();
 			return result;
         }
 
-		public async Task<PostEntity> CreatePost(PostEntity post)
+		public async Task<PostEntity> CreatePostAsync(PostEntity post)
 		{
-			_dbContext.Posts.Add(post);
-			_dbContext.SaveChanges();
+			await _dbContext.Posts.AddAsync(post);
+			await _dbContext.SaveChangesAsync();
 			return post;
 		}
 
-        public async Task<PostEntity> EditPost(PostEntity post)
+        public async Task<PostEntity> EditPostAsync(PostEntity post)
         {
-			var tmp = await GetPostById(post.Id);
+			var tmp = await GetPostByIdAsync(post.Id);
 			tmp.Context = post.Context;
 			tmp.BlogId = post.BlogId;
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 			return tmp;
         }
 
-		public async Task<PostEntity> DeletePost(PostEntity post)
+		public async Task<PostEntity> DeletePostAsync(PostEntity post)
         {
 			_dbContext.Posts.Remove(post);
-			_dbContext.SaveChanges();
+			await _dbContext.SaveChangesAsync();
 			return post;
         }
     }

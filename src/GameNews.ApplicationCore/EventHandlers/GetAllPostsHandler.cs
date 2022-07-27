@@ -20,10 +20,10 @@ namespace GameNews.ApplicationCore.EventHandlers
 
         public async Task<List<PostExtendedDto>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
         {
-            List<PostEntity> posts = await _postRepository.GetAllPosts();
+            List<PostEntity> posts = await _postRepository.GetAllPostsAsync();
             if (posts.FirstOrDefault() != null)
             {
-                List<PostExtendedDto> result = await _mapper.Convert(posts);
+                List<PostExtendedDto> result = _mapper.Convert(posts);
                 return result;
             }
             throw new PostNotFoundException();

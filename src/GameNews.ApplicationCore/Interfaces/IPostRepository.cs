@@ -5,11 +5,15 @@ namespace GameNews.ApplicationCore.Interfaces
 {
 	public interface IPostRepository
 	{
-		public Task<List<PostEntity>> GetAllPosts();
-		public Task<PostEntity> GetPostById(int id);
-		public Task<PostEntity> CreatePost(PostEntity post);
-        public Task<PostEntity> EditPost(PostEntity post);
-        public Task<PostEntity> DeletePost(PostEntity post);
+		public Task<List<PostEntity>> GetAllPostsAsync();
+
+		public Task<PostEntity> GetPostByIdAsync(int id);
+
+		public Task<PostEntity> CreatePostAsync(PostEntity post);
+
+        public Task<PostEntity> EditPostAsync(PostEntity post);
+
+        public Task<PostEntity> DeletePostAsync(PostEntity post);
     }
 }
 
