@@ -20,7 +20,7 @@ namespace GameNews.ApplicationCore.EventHandlers
 	
         public async Task<List<BlogExtendedDto>> Handle(GetAllBlogsQuery request, CancellationToken cancellationToken)
         {
-            List<BlogEntity> blogs = await _blogRepository.GetAllBlogsAsync();
+            List<BlogEntity> blogs = await _blogRepository.GetAllBlogsAsync(cancellationToken);
             if (blogs.FirstOrDefault() != null)
             {
                 List<BlogExtendedDto> result = _mapper.Convert(blogs);

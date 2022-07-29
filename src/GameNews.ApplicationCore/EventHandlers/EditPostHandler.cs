@@ -22,12 +22,12 @@ namespace GameNews.ApplicationCore.EventHandlers
 
         public async Task<PostExtendedDto> Handle(EditPostCommand request, CancellationToken cancellationToken)
         {
-            if (await _postRepository.GetPostByIdAsync(request.Id) != null)
+            if (await _postRepository.GetPostByIdAsync(request.Id, cancellationToken) != null)
             {
-                if (await _blogRepository.GetBlogByIdAsync(request.BlogId) != null)
+                if (await _blogRepository.GetBlogByIdAsync(request.BlogId, cancellationToken) != null)
                 {
                     PostEntity post = _mapper.Convert(request);
-                    var result = await _postRepository.EditPostAsync(post);
+                    var result = await _postRepository.EditPostAsync(post,cancellationToken);
                     PostExtendedDto dto = _mapper.Convert(result);
                     return dto;
                 }

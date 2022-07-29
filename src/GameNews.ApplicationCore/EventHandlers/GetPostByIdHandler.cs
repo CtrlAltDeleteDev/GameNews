@@ -20,7 +20,7 @@ namespace GameNews.ApplicationCore.EventHandlers
 
         public async Task<PostExtendedDto> Handle(GetPostByIdQuery request, CancellationToken cancellationToken)
         {
-            PostEntity post = await _postRepository.GetPostByIdAsync(request.Id);
+            PostEntity post = await _postRepository.GetPostByIdAsync(request.Id, cancellationToken);
             if (post != null)
             {
                 PostExtendedDto result = _mapper.Convert(post);

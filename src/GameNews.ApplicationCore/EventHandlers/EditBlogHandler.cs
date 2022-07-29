@@ -20,11 +20,11 @@ namespace GameNews.ApplicationCore.EventHandlers
 
         public async Task<BlogExtendedDto> Handle(EditBlogCommand request, CancellationToken cancellationToken)
         {
-            BlogEntity check = await _blogRepository.GetBlogByIdAsync(request.Id);
+            BlogEntity check = await _blogRepository.GetBlogByIdAsync(request.Id, cancellationToken);
             if (check != null)
             {
                 BlogEntity blog = _mapper.Convert(request);
-                BlogEntity result = await _blogRepository.EditBlogAsync(blog);
+                BlogEntity result = await _blogRepository.EditBlogAsync(blog, cancellationToken);
                 BlogExtendedDto dto = _mapper.Convert(result);
                 return dto;
             }

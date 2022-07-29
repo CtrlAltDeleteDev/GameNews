@@ -14,38 +14,38 @@ namespace GameNews.ApplicationCore.Repositories
 			_dbContext = dbContext;
         }
 
-		public async Task<List<PostEntity>> GetAllPostsAsync()
+		public async Task<List<PostEntity>> GetAllPostsAsync(CancellationToken token)
         {
-			var result = await _dbContext.Posts.ToListAsync();
+			var result = await _dbContext.Posts.ToListAsync(token);
 			return result;
         }
 
-		public async Task<PostEntity> GetPostByIdAsync(int id)
+		public async Task<PostEntity> GetPostByIdAsync(int id, CancellationToken token)
         {
-			var result = await _dbContext.Posts.Where(x => x.Id == id).FirstOrDefaultAsync();
+			var result = await _dbContext.Posts.Where(x => x.Id == id).FirstOrDefaultAsync(token);
 			return result;
         }
 
-		public async Task<PostEntity> CreatePostAsync(PostEntity post)
+		public async Task<PostEntity> CreatePostAsync(PostEntity post, CancellationToken token)
 		{
-			await _dbContext.Posts.AddAsync(post);
-			await _dbContext.SaveChangesAsync();
+			await _dbContext.Posts.AddAsync(post, token);
+			await _dbContext.SaveChangesAsync(token);
 			return post;
 		}
 
-        public async Task<PostEntity> EditPostAsync(PostEntity post)
+        public async Task<PostEntity> EditPostAsync(PostEntity post, CancellationToken token)
         {
-			var tmp = await GetPostByIdAsync(post.Id);
+			var tmp = await GetPostByIdAsync(post.Id, token);
 			tmp.Context = post.Context;
 			tmp.BlogId = post.BlogId;
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(token);
 			return tmp;
         }
 
-		public async Task<PostEntity> DeletePostAsync(PostEntity post)
+		public async Task<PostEntity> DeletePostAsync(PostEntity post, CancellationToken token)
         {
 			_dbContext.Posts.Remove(post);
-			await _dbContext.SaveChangesAsync();
+			await _dbContext.SaveChangesAsync(token);
 			return post;
         }
     }

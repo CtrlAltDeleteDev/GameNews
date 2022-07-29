@@ -20,10 +20,10 @@ namespace GameNews.ApplicationCore.EventHandlers
 
         public async Task<PostExtendedDto> Handle(DeletePostCommand request, CancellationToken cancellationToken)
         {
-           PostEntity post = await _postRepository.GetPostByIdAsync(request.Id);
+           PostEntity post = await _postRepository.GetPostByIdAsync(request.Id, cancellationToken);
            if (post != null)
            {
-                PostEntity deletion = await _postRepository.DeletePostAsync(post);
+                PostEntity deletion = await _postRepository.DeletePostAsync(post, cancellationToken);
                 PostExtendedDto result = _mapper.Convert(deletion);
                 return result;
            }

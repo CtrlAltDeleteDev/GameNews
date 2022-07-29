@@ -20,7 +20,7 @@ namespace GameNews.ApplicationCore.EventHandlers
         public async Task<BlogExtendedDto> Handle(CreateBlogCommand request, CancellationToken cancellationToken)
         {
             BlogEntity blog = _mapper.Convert(request);
-            BlogEntity result = await _blogRepository.CreateBlogAsync(blog);
+            BlogEntity result = await _blogRepository.CreateBlogAsync(blog, cancellationToken);
             BlogExtendedDto dto = _mapper.Convert(result);
             return dto;
         }
